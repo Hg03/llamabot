@@ -8,7 +8,7 @@ st.set_page_config(page_title="Placement Bot, powered by LlamaIndex", page_icon=
 st.title("Placement Assistance Bot")
 openai_key = st.text_input("Enter your OpenAI API Key", placeholder = "sk-.....", type = "password")
 if openai_key:
-    openai.api_key = st.secrets.openai_key
+    openai.api_key = openai_key
 #st.title("Chat about all your query regarding companies and its placement rounds, powered by LlamaIndex 💬🦙")
 #st.info("Check out the full tutorial to build this app in our [blog post](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)", icon="📃")
          
