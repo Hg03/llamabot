@@ -5,17 +5,6 @@ import openai
 from llama_index import SimpleDirectoryReader
 
 st.set_page_config(page_title="Placement Bot, powered by LlamaIndex", page_icon="🦙", layout="centered", initial_sidebar_state="auto", menu_items=None)
-st.title("Placement Assistance Bot")
-openai_key = st.text_input("Enter your OpenAI API Key", placeholder = "sk-.....", type = "password")
-if openai_key:
-    openai.api_key = openai_key
-#st.title("Chat about all your query regarding companies and its placement rounds, powered by LlamaIndex 💬🦙")
-#st.info("Check out the full tutorial to build this app in our [blog post](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)", icon="📃")
-         
-if "messages" not in st.session_state.keys(): # Initialize the chat messages history
-    st.session_state.messages = [
-        {"role": "assistant", "content": "Ask me a question about Company and it's placement rounds"}
-    ]
 
 @st.cache_resource(show_spinner=False)
 def load_data():
@@ -25,6 +14,18 @@ def load_data():
         service_context = ServiceContext.from_defaults(llm=OpenAI(model="gpt-3.5-turbo", temperature=0.5, system_prompt="You are an expert on the Streamlit Python library and your job is to answer technical questions. Assume that all questions are related to the Streamlit Python library. Keep your answers technical and based on facts – do not hallucinate features."))
         index = VectorStoreIndex.from_documents(docs, service_context=service_context)
         return index
+        
+st.title("Placement Assistance Bot")
+openai_key = st.text_input("Enter your OpenAI API Key", placeholder = "sk-.....", type = "password")
+if openai_key:
+    openai.api_key = openai_key
+#st.title("Chat about all your query regarding companies and its placement rounds, powered by LlamaIndex 💬🦙")
+#st.info("Check out the full tutorial to build this app in our [blog post](https://blog.streamlit.io/build-a-chatbot-with-custom-data-sources-powered-by-llamaindex/)", icon="📃")
+         
+    if "messages" not in st.session_state.keys(): # Initialize the chat messages history
+        st.session_state.messages = [{"role": "assistant", "content": "Ask me a question about Company and it's placement rounds"}]
+
+
 
 index = load_data()
 # chat_engine = index.as_chat_engine(chat_mode="condense_question", verbose=True, system_prompt="You are an expert on the Streamlit Python library and your job is to answer technical questions. Assume that all questions are related to the Streamlit Python library. Keep your answers technical and based on facts – do not hallucinate features.")
